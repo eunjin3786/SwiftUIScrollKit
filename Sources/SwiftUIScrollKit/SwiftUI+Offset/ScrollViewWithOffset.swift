@@ -1,12 +1,18 @@
 import SwiftUI
 
-struct ScrollViewWithOffset<Content: View>: View {
+public struct ScrollViewWithOffset<Content: View>: View {
     
-    let items: [Content]
-    let direction: Axis.Set
-    let onOffsetChanged: (CGFloat) -> Void
+    public let items: [Content]
+    public let direction: Axis.Set
+    public let onOffsetChanged: (CGFloat) -> Void
     
-    var body: some View {
+    public init(items: [Content], direction: Axis.Set, onOffsetChanged: @escaping (CGFloat) -> Void) {
+        self.items = items
+        self.direction = direction
+        self.onOffsetChanged = onOffsetChanged
+    }
+    
+    public var body: some View {
         ScrollView(direction) {
             switch direction {
             case .horizontal:

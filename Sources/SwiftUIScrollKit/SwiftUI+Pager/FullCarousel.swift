@@ -1,14 +1,21 @@
 import SwiftUI
 
-struct FullCarousel<Content: View>: View {
+public struct FullCarousel<Content: View>: View {
     
-    let items: [Content]
-    let itemSize: CGSize
+    public let items: [Content]
+    public let itemSize: CGSize
+
+    public let onCurrentPageChanged: (Int) -> Void
+    public let onOffsetChanged: (CGFloat) -> Void
     
-    let onCurrentPageChanged: (Int) -> Void
-    let onOffsetChanged: (CGFloat) -> Void
+    public init(items: [Content], itemSize: CGSize, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+        self.items = items
+        self.itemSize = itemSize
+        self.onCurrentPageChanged = onCurrentPageChanged
+        self.onOffsetChanged = onOffsetChanged
+    }
     
-    var body: some View {
+    public var body: some View {
         Pager(
             items: items,
             layout: PagerLayout(

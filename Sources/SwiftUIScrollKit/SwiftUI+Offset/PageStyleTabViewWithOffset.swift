@@ -1,14 +1,20 @@
 import SwiftUI
 
-struct PageStyleTabViewWithOffset<Content: View>: View {
+public struct PageStyleTabViewWithOffset<Content: View>: View {
     
-    let items: [Content]
-    let onCurrentPageChanged: (Int) -> Void
-    let onOffsetChanged: (CGFloat) -> Void
+    public let items: [Content]
+    public let onCurrentPageChanged: (Int) -> Void
+    public let onOffsetChanged: (CGFloat) -> Void
     
     @State private var currentPage = 0
     
-    var body: some View {
+    public init(items: [Content], onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+        self.items = items
+        self.onCurrentPageChanged = onCurrentPageChanged
+        self.onOffsetChanged = onOffsetChanged
+    }
+    
+    public var body: some View {
         TabView(selection: $currentPage) {
             ForEach(items.indices, id: \.self) { index in
                 items[index]

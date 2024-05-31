@@ -3,6 +3,7 @@ import UIKit
 final class PagerLayout: UICollectionViewFlowLayout {
     
     private var scrollRatio: CGFloat = 1
+    private(set) var currentPage: Int = 0
     
     init(itemSize: CGSize, scrollRatio: CGFloat = 1) {
         super.init()
@@ -34,9 +35,10 @@ final class PagerLayout: UICollectionViewFlowLayout {
         }
         
         let pageWidth = itemSize.width + minimumLineSpacing
-
         let currentPage = collectionView.contentOffset.x / pageWidth
         let nearestPage = velocity.x < 0 ? floor(currentPage) : ceil(currentPage)
+
+        self.currentPage = Int(nearestPage)
         
         let x = pageWidth * (nearestPage - 1) + pageWidth * scrollRatio
         return CGPoint(x: x, y: proposedContentOffset.y)

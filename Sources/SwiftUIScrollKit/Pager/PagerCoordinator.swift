@@ -38,9 +38,6 @@ class PagerCoordinator<Content: View>: NSObject, UICollectionViewDataSource, UIC
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        var index = Int(targetContentOffset.pointee.x / layout.itemSize.width)
-        index = max(0, index)
-        index = min(items.count - 1, index)
-        currentPage = index
+        currentPage = min(items.count - 1, max(0, layout.currentPage))
     }
 }

@@ -1,11 +1,11 @@
 import UIKit
 import SwiftUI
 
-final class HostingCollectionViewCell<Content: View>: UICollectionViewCell {
+final class HostingCollectionViewCell: UICollectionViewCell {
     
     static var identifier: String { "HostingCell" }
     
-    private var hostingController: UIHostingController<Content>?
+    private var hostingController: UIHostingController<AnyView>?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -13,8 +13,8 @@ final class HostingCollectionViewCell<Content: View>: UICollectionViewCell {
         hostingController = nil
     }
     
-    func configure(@ViewBuilder _ content: () -> Content) {
-        let hostingController = UIHostingController(rootView: content())
+    func configure(with content: some View) {
+        let hostingController = UIHostingController(rootView: AnyView(content))
         contentView.addSubview(hostingController.view)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

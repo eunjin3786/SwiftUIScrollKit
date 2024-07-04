@@ -1,10 +1,10 @@
 import SwiftUI
 
-typealias Cell<Content: View> = HostingCollectionViewCell<Content>
+typealias Cell = HostingCollectionViewCell
 
-struct Pager<Content: View>: UIViewRepresentable {
+struct Pager: UIViewRepresentable {
     
-    let items: [Content]
+    let items: [any View]
     let layout: PagerLayout
     
     let onCurrentPageChanged: (Int) -> Void
@@ -20,7 +20,7 @@ struct Pager<Content: View>: UIViewRepresentable {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = context.coordinator
         collectionView.delegate = context.coordinator
-        collectionView.register(Cell<Content>.self, forCellWithReuseIdentifier: Cell<Content>.identifier)
+        collectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         return collectionView
     }
     
@@ -37,8 +37,8 @@ struct Pager<Content: View>: UIViewRepresentable {
         }
     }
     
-    func makeCoordinator() -> PagerCoordinator<Content> {
-        PagerCoordinator<Content>(
+    func makeCoordinator() -> PagerCoordinator {
+        PagerCoordinator(
             items: items,
             layout: layout,
             onCurrentPageChanged: onCurrentPageChanged,

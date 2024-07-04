@@ -1,8 +1,8 @@
 import SwiftUI
 
-class PagerCoordinator<Content: View>: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PagerCoordinator: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let items: [Content]
+    let items: [any View]
     var layout: PagerLayout
     
     var currentPage: Int = 0 {
@@ -14,7 +14,7 @@ class PagerCoordinator<Content: View>: NSObject, UICollectionViewDataSource, UIC
     let onCurrentPageChanged: (Int) -> Void
     let onOffsetChanged: (CGFloat) -> Void
     
-    init(items: [Content], layout: PagerLayout, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    init(items: [any View], layout: PagerLayout, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.layout = layout
         self.onCurrentPageChanged = onCurrentPageChanged
@@ -26,10 +26,9 @@ class PagerCoordinator<Content: View>: NSObject, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell<Content>.identifier, for: indexPath) as? Cell<Content>
-        cell?.configure {
-            items[indexPath.item]
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as? Cell
+        let item = items[indexPath.item]
+        cell?.configure(with: item)
         return cell ?? UICollectionViewCell()
     }
     

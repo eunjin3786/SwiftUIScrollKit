@@ -1,14 +1,14 @@
 import SwiftUI
 
-public struct PageStyleTabViewWithOffset<Content: View>: View {
+public struct PageStyleTabViewWithOffset: View {
     
-    public let items: [Content]
+    public let items: [any View]
     public let onCurrentPageChanged: (Int) -> Void
     public let onOffsetChanged: (CGFloat) -> Void
     
     @State private var currentPage = 0
     
-    public init(items: [Content], onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    public init(items: [any View], onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.onCurrentPageChanged = onCurrentPageChanged
         self.onOffsetChanged = onOffsetChanged
@@ -17,7 +17,7 @@ public struct PageStyleTabViewWithOffset<Content: View>: View {
     public var body: some View {
         TabView(selection: $currentPage) {
             ForEach(items.indices, id: \.self) { index in
-                items[index]
+                item(of: index)
                     .tag(index)
             }
             .overlay {
@@ -31,6 +31,11 @@ public struct PageStyleTabViewWithOffset<Content: View>: View {
         .onChange(of: currentPage) {
             onCurrentPageChanged($0)
         }
+    }
+    
+    private func item(of index: Int) -> some View {
+        let item = items[index]
+        return AnyView(item)
     }
 }
 

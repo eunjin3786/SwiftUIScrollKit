@@ -1,12 +1,12 @@
 import SwiftUI
 
-public struct ScrollViewWithOffset<Content: View>: View {
+public struct ScrollViewWithOffset: View {
     
-    public let items: [Content]
+    public let items: [any View]
     public let direction: Axis.Set
     public let onOffsetChanged: (CGFloat) -> Void
     
-    public init(items: [Content], direction: Axis.Set, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    public init(items: [any View], direction: Axis.Set, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.direction = direction
         self.onOffsetChanged = onOffsetChanged
@@ -31,7 +31,7 @@ public struct ScrollViewWithOffset<Content: View>: View {
     
     var contents: some View {
         ForEach(items.indices, id: \.self) { index in
-            items[index]
+            item(of: index)
         }
         .overlay {
             OffsetReader(direction: direction)
@@ -39,6 +39,11 @@ public struct ScrollViewWithOffset<Content: View>: View {
         .onPreferenceChange(OffsetPreferenceKey.self) {
             onOffsetChanged($0)
         }
+    }
+    
+    private func item(of index: Int) -> some View {
+        let item = items[index]
+        return AnyView(item)
     }
 }
 

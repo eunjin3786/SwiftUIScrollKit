@@ -1,8 +1,8 @@
 import SwiftUI
 
-public struct CenteredCarousel<Content: View>: View {
+public struct CenteredCarousel: View {
     
-    public let items: [Content]
+    public let items: [any View]
     public let pagerWidth: CGFloat
     public let sectionPadding: CGFloat
     public let cardPadding: CGFloat
@@ -11,7 +11,7 @@ public struct CenteredCarousel<Content: View>: View {
     public let onCurrentPageChanged: (Int) -> Void
     public let onOffsetChanged: (CGFloat) -> Void
     
-    public init(items: [Content], pagerWidth: CGFloat, sectionPadding: CGFloat, cardPadding: CGFloat, height: CGFloat, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    public init(items: [any View], pagerWidth: CGFloat, sectionPadding: CGFloat, cardPadding: CGFloat, height: CGFloat, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.pagerWidth = pagerWidth
         self.sectionPadding = sectionPadding

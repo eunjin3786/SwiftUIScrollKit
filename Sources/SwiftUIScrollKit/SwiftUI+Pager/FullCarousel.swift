@@ -1,14 +1,14 @@
 import SwiftUI
 
-public struct FullCarousel<Content: View>: View {
+public struct FullCarousel: View {
     
-    public let items: [Content]
+    public let items: [any View]
     public let itemSize: CGSize
 
     public let onCurrentPageChanged: (Int) -> Void
     public let onOffsetChanged: (CGFloat) -> Void
     
-    public init(items: [Content], itemSize: CGSize, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    public init(items: [any View], itemSize: CGSize, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.itemSize = itemSize
         self.onCurrentPageChanged = onCurrentPageChanged

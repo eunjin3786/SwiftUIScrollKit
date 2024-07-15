@@ -1,15 +1,15 @@
 import SwiftUI
 
-public struct RatioCarousel<Content: View>: View {
+public struct RatioCarousel: View {
     
-    public let items: [Content]
+    public let items: [any View]
     public let itemSize: CGSize
     public let scrollRatio: CGFloat
 
     public let onCurrentPageChanged: (Int) -> Void
     public let onOffsetChanged: (CGFloat) -> Void
     
-    public init(items: [Content], itemSize: CGSize, scrollRatio: CGFloat, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
+    public init(items: [any View], itemSize: CGSize, scrollRatio: CGFloat, onCurrentPageChanged: @escaping (Int) -> Void, onOffsetChanged: @escaping (CGFloat) -> Void) {
         self.items = items
         self.itemSize = itemSize
         self.scrollRatio = scrollRatio
